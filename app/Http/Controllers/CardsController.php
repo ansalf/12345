@@ -19,7 +19,7 @@ class CardsController extends Controller
     function add(Request $req)
     {
         $cards = new Cards;
-        $cards->board_id = $req->input("Board_List");
+        $cards->list_id = $req->input("list_id");
         $cards->order = $req->input("Order");
         $cards->task = $req->input("Task");
         $cards->save();
@@ -38,7 +38,7 @@ class CardsController extends Controller
     function update(Request $req, $id)
     {
         $cards = Cards::find($id);
-        $cards->board_id = $req->input("Board_List");
+        $cards->list_id = $req->input("list_id");
         $cards->order = $req->input("Order");
         $cards->task = $req->input("Task");
         $cards->save();

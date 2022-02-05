@@ -19,9 +19,9 @@ class BoardListController extends Controller
    function add(Request $req)
    {
        $board_list = new Board_List;
-       $board_list->board_id=$req->input("Board_List");
+       $board_list->board_id=$req->input("Board_id");
        $board_list->order=$req->input("Order");
-       $board_list->task=$req->input("Task");
+       $board_list->name=$req->input("Name");
        $board_list-> save();
        return $req->input;
    }
@@ -38,9 +38,9 @@ class BoardListController extends Controller
        function update(Request $req, $id)
        {
         $board_List = Board_List::find($id);
-        $board_List->board_id=$req->input("Board_List");
+        $board_List->board_id=$req->input("Board_id");
         $board_List->order=$req->input("Order");
-        $board_List->task=$req->input("Task");
+        $board_List->name=$req->input("Name");
         $board_List-> save();
         return $req->input;
        }
