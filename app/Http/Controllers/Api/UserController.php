@@ -19,7 +19,8 @@ class UserController extends Controller
             "first_name" => ["required", 'min:2', 'max:20', new Uppercase],
             "last_name" => ["required", 'min:2', 'max:20', new Uppercase],
             "username" => "required|unique:users",
-            "password" => ["required", 'max:12', Password::min(5)]
+            "password" => ["required", 'max:12', Password::min(5)],
+            "role" => ["required",]
         ]);
 
         if ($validator->fails()) {
@@ -34,6 +35,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->username = $request->username;
         $user->password = bcrypt($request->password);
+        $user->role = $request->role;
         $user->save();
 
         ## jika gagal ###
@@ -83,8 +85,9 @@ class UserController extends Controller
 
         return response()->json([
             "token" => $token,
-            "role" => "user"
+            "role" => $user->role, 
         ]);
+
     }
 
     function Logout(Request $reg)

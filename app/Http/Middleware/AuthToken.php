@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Login_Tokens;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,12 @@ class AuthToken
                 "message" => "unauthorized user"
             ]);
         }
+
+        // Ambil Data dari tabel user
+        $user_data = User::find($login_token->user_id);
+
+        // Passing data dari tabel user ke request agar bisa digunakan dinext proses
+        $request->user_data = $user_data;
 
         return $next($request);
     }

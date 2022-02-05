@@ -22,29 +22,41 @@ use App\Http\Controllers\Api\UserController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::middleware(["AuthToken"])->group(function () {
+    
+    // view
+    Route::get('v1/view', [BoardListController::class, 'View']);
+    Route::get('v1/board', [BoardsController::class, 'Board']);
+    Route::get('v1/member', [BoardsMemberController::class, 'Member']);
+    Route::get('v1/cards', [CardsController::class, 'Cards']);
 
-// view
-Route::get('v1/view', [BoardListController::class, 'view']);
-Route::get('v1/matpel', [BoardsController::class, 'Matpel']);
-Route::get('v1/guru', [BoardsMemberController::class, 'Guru']);
-Route::get('v1/buku', [CardsController::class, 'Buku']);
+    // add data
+    Route::post('v1/add', [BoardListController::class, 'Add']);
+    Route::post('v1/boardadd', [BoardsController::class, 'BoardAdd'])->middleware("AuthToken");
+    Route::post('v1/memberadd', [BoardsMemberController::class, 'MemberAdd']);
+    Route::post('v1/cardadd', [CardsController::class, 'Cardadd']);
 
-// add data
-Route::post('v1/view', [BoardListController::class, 'view']);
-Route::post('v1/matpel', [BoardsController::class, 'Matpel']);
-Route::post('v1/guru', [BoardsMemberController::class, 'Guru']);
-Route::post('v1/buku', [CardsController::class, 'Buku']);
-// edit data
-Route::get('v1/getbuku/{id}/url/{id2}', [BukuController::class, 'getBuku']);
-Route::put('v1/updatebuku/{id}', [BukuController::class, 'updateBuku']);
+    // edit data
+    Route::get('v1/getlist/{id}', [BoardListController::class, 'getList']);
+    Route::put('v1/updatelist/{id}', [BoardListController::class, 'updateList']);
+
+    Route::get('v1/getboard/{id}', [BoardsController::class, 'getBoard']);
+    Route::put('v1/updateboard/{id}', [BoardsController::class, 'updateBoard']);
+
+    Route::get('v1/getmember/{id}', [BoardsMemberController::class, 'getMember']);
+    Route::put('v1/updatemember/{id}', [BoardsMemberController::class, 'updateMember']);
+
+    Route::get('v1/getlcard/{id}', [CardsController::class, 'getCard']);
+    Route::put('v1/updatecard/{id}', [CardsController::class, 'updateCard']);
+
+    //logout
+    Route::get('v1/logout', [UserController::class, 'logout']);
+    // ->middleware("auth_token");
+
+});
 
 // register
 Route::post('v1/register', [UserController::class, 'register']);
 
 // login
 Route::post('v1/login', [UserController::class, 'login']);
-
-
-//logout
-Route::get('v1/logout', [UserController::class, 'logout']);
-// ->middleware("auth_token");
